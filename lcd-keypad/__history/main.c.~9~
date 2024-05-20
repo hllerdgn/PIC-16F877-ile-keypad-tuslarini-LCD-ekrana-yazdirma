@@ -1,0 +1,71 @@
+#include <main.h>
+// LCD öniþlemcileri
+
+#define use_portb_lcd TRUE
+#include <lcd.c>
+
+int16 digital;
+float sicaklik;
+
+// float deðerini string'e dönüþtürmek için özel fonksiyon
+void ftoa(float num, char* str, int afterpoint) {
+    // Tam kýsmý çýkar
+    int ipart = (int)num;
+
+    // Kesir kýsmý çýkar
+    float fpart = num - (float)ipart;
+
+    // Tam kýsmý string'e dönüþtür
+    sprintf(str, "%d", ipart);
+
+    // Kesir kýsmý varsa
+    if (afterpoint != 0) {
+        // Kesir kýsmýný ondalýk formda geniþlet
+        fpart = fpart * pow(10, afterpoint);
+
+        // Tam kýsmý sonuna nokta ekle
+        sprintf(str + strlen(str), ".%d", (int)fpart);
+    }
+}
+
+#INT_AD
+void AD_isr(void) 
+{
+    output_high(pin_C5);
+    delay_ms(100);
+    output_low(pin_C5);
+}
+
+void main()
+{
+    set_tris_b(0x00);
+    set_tris_c(0x00);
+    set_tris_e(0x00);
+    output_b(0x00);
+    output_c(0x00);
+
+    setup_adc_ports(ALL_ANALOG);
+    setup_adc(ADC_CLOCK_DIV_8);
+    set_adc_channel(5);
+
+    enable_interrupts(INT_AD);
+    enable_interrupts(GLOBAL);
+
+    lcd_init();
+
+    printf(lcd_putc, "\fSICAKLIK UYGULAMASI");
+    delay_ms(1000);
+    printf(lcd_putc, "\f");
+
+    while(TRUE)
+    {
+        digital = read_adc();
+        sicaklik = digital * (5.8 / 1024) * 10;
+
+        char sicaklik_str[10]; // Sýcaklýk deðerini tutacak dizi
+        ftoa(sicaklik, sicaklik_str, 1); // Sýcaklýk deðerini string'e dönüþtür, 1 basamaklý kesir kýsmý
+
+        printf(lcd_putc, "\fdigital=%u \nsicaklik=%s°C", digital, sicaklik_str);
+        delay_ms(1000);
+    }
+}

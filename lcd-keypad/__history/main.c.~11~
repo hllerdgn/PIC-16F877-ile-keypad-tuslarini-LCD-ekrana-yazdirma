@@ -1,0 +1,32 @@
+#include <16f877.h>
+#use delay(clock=4000000)
+#fuses XT,NOWDT,NOLVP,NOCPD,NOPROTECT,NODEBUG,NOBROWNOUT,NOWRT
+#use fast_io(b)
+#use fast_io(d)
+#define use_portb_lcd TRUE
+#include <lcd.c>
+
+
+void main()
+{
+
+
+setup_adc_ports(NO_ANALOGS);
+setup_adc(ADC_OFF);
+setup_CCP1(CCP_OFF);
+setup_CCP2(CCP_OFF);
+
+sset_tris_b(0x00);
+set_tris_d(0b11110000);
+lcd_init();
+
+while(true){
+output_b(0x00);
+
+output_high(pin_d0);
+if(input(pin_d4))
+{
+delay_ms(20);
+printf(lcd_putc,"%f7");
+}
+}

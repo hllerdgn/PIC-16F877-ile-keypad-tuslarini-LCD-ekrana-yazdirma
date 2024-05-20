@@ -1,0 +1,83 @@
+004-005 @WRITE_PROGRAM_MEMORY8.P1
+004-005 @READ_PROGRAM_MEMORY8.P2
+006     lcdlat
+006     lcd
+008     PSP_DATA
+015     CCP_1
+015     CCP_1_LOW
+016     CCP_1_HIGH
+01B     CCP_2
+01B     CCP_2_LOW
+01C     CCP_2_HIGH
+021     lcd_init.i
+021     lcd_putc.c
+022     lcd_gotoxy.x
+022     @delay_ms1.P1
+022     lcd_init.@SCRATCH1
+023     lcd_gotoxy.y
+024     lcd_gotoxy.address
+025     lcd_gotoxy.@SCRATCH1
+026     lcd_send_byte.address
+027     lcd_send_byte.n
+028     lcd_read_byte.low
+028     lcd_send_byte.@SCRATCH1
+029     lcd_read_byte.high
+029     lcd_send_nibble.n
+02A     lcd_read_byte.@SCRATCH1
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+086     lcdtris
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+000004  LCD_INIT_STRING.call
+000008  LCD_INIT_STRING.data
+00000C  @delay_ms1
+000021  lcd_send_nibble
+00002D  lcd_read_nibble
+000033  lcd_send_byte
+000039  lcd_read_byte
+000073  lcd_init
+0000A6  lcd_gotoxy
+0000B8  lcd_putc
+0000E4  tus
+0001A5  @cinit1
+0001A5  MAIN
+0001AA  @cinit2
+
+Project Directory:
+    C:\Users\mmizt\Desktop\MÝKROÝÞLEMCÝLER\mikroiþlemciler deneme\lcd\
+
+Project Files:
+    main.c                                                  [20-May-24 22:38  CRC=91E3537F]
+    ..\..\..\..\..\..\Program Files (x86)\PICC\Devices\16f877.h [21-Haz-13 16:04  CRC=A355A189]
+    ..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\lcd.c [23-Aðu-12 09:01  CRC=D28E8746]
+
+Source signature=DA560394
+
+Units:
+    main (main)
+
+Compiler Settings:
+    Processor:      PIC16F877
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    XREF file:   main.xsym
+    Errors:      main.err
+    Ext Symbols: main.esym
+    INHX8:       main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.ccspjt
+    Call Tree:   main.tre
+    Statistics:  main.STA
